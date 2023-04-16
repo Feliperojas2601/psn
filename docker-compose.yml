@@ -68,10 +68,10 @@ services:
     networks:
       - psn_network
 
-  psn-authentication-ms:
+  psn-authentication-ms-service:
     build: ./psn_authentication/psn_authentication_ms
-    container_name: psn-authentication-ms
-    hostname: psn-authentication-ms
+    container_name: psn-authentication-ms-service
+    hostname: psn-authentication-ms-service
     ports:
       - "4000:4000"
     environment:
@@ -80,6 +80,12 @@ services:
       - DB_USER=psn_admin
       - DB_PASSWORD=123
       - DB_NAME=psn-authentication-db
+
+      - LDAP_HOST=psn-openldap-service
+      - LDAP_PORT=389
+      - LDAP_BASE=dc=pawsomenetwork,dc=com
+      - LDAP_USER=cn=admin,dc=pawsomenetwork,dc=com
+      - LDAP_PASSWORD=admin_pass
     depends_on:
       - psn-authentication-db-service
       - psn-openldap-service
@@ -119,10 +125,10 @@ services:
     networks:
       - psn_network
 
-  psn-posts-ms-service:
-    image: psn-posts-ms-service
+  psn-post-ms-service:
+    image: psn-post-ms-service
     build: ./psn_post_ms
-    container_name: psn-posts-ms-service
+    container_name: psn-post-ms-service
     ports:
       - "4100:4100"
     environment:
