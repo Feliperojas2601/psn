@@ -1,12 +1,12 @@
 version: '4.17'
 services:
-  openldap:
+  psn-openldap-service:
     image: osixia/openldap:latest
-    container_name: openldap
-    hostname: openldap
+    container_name: psn-openldap-service
+    hostname: psn-openldap-service
     ports: 
-      - "4004:389"
-      - "4005:636"
+      - "389:389"
+      - "636:636"
     volumes:
       - ./data/certificates:/container/service/slapd/assets/certs
       - ./data/slapd/database:/var/lib/ldap
@@ -27,38 +27,44 @@ services:
     networks:
       - psn_network
   
-  phpldapadmin:
+  psn-phpldapadmin-service:
     image: osixia/phpldapadmin:latest
-    container_name: phpldapadmin
-    hostname: phpldapadmin
+    container_name: psn-phpldapadmin-service
+    hostname: psn-phpldapadmin-service
     ports: 
       - "4003:80"
     environment: 
-      - PHPLDAPADMIN_LDAP_HOSTS=openldap
+      - PHPLDAPADMIN_LDAP_HOSTS=psn-openldap-service
+      - LDAP_HOSTS=psn-openldap-service
       - PHPLDAPADMIN_HTTPS=false
     depends_on:
-      - openldap
+      - psn-openldap-service
     networks:
       - psn_network
 
-  psn-authentication-db:
+  psn-authentication-db-service:
     build: ./psn_authentication/psn_authentication_db
-    container_name: psn-authentication-db
-    hostname: psn-authentication-db
+    container_name: psn-authentication-db-service
+    hostname: psn-authentication-db-service
     ports:
-      - "4001:3306"
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=psn-authentication-db
+      - MYSQL_USER=psn_admin
+      - MYSQL_PASSWORD=123
     networks:
       - psn_network
 
-  phpmyadmin:
+  psn-phpmyadmin-service:
     image: phpmyadmin/phpmyadmin
-    container_name: phpmyadmin
+    container_name: psn-phpmyadmin-service
     ports:
       - "4002:80"
     environment:
-      PMA_HOST: psn-authentication-db
+      PMA_HOST: psn-authentication-db-service
     depends_on:
-      - psn-authentication-db
+      - psn-authentication-db-service
     networks:
       - psn_network
 
@@ -68,18 +74,24 @@ services:
     hostname: psn-authentication-ms
     ports:
       - "4000:4000"
+    environment:
+      - DB_HOST=psn-authentication-db-service
+      - DB_PORT=3306
+      - DB_USER=psn_admin
+      - DB_PASSWORD=123
+      - DB_NAME=psn-authentication-db
     depends_on:
-      - psn-authentication-db
-      - openldap
+      - psn-authentication-db-service
+      - psn-openldap-service
     networks:
       - psn_network
 
-  psn-ur-db:
+  psn-ur-db-service:
     image: neo4j
-    container_name: psn-ur-db
+    container_name: psn-ur-db-service
     ports:
-      - 4201:7474
-      - 4202:7687
+      - 7474:7474
+      - 7687:7687
     restart: unless-stopped
     environment:
       - NEO4J_AUTH=neo4j/psn12345
@@ -92,29 +104,37 @@ services:
     networks:
       - psn_network
 
-  psn-ur-ms:
-    image: psn-ur-ms
+  psn-ur-ms-service:
+    image: psn-ur-ms-service
     build: ./psn_user_relationships_ms
-    container_name: psn-ur-ms
+    container_name: psn-ur-ms-service
     ports:
       - "4200:4200"
+    environment:
+      - NEO4J_URI=bolt://psn-ur-db-service:7687
+      - NEO4J_USERNAME=neo4j
+      - NEO4J_PASSWORD=psn12345
     volumes:
       - "./psn_user_relationships_ms:/psn-ur-ms"
     networks:
       - psn_network
 
-  psn-posts-ms:
+  psn-posts-ms-service:
+    image: psn-posts-ms-service
     build: ./psn_post_ms
-    container_name: psn-posts-ms
+    container_name: psn-posts-ms-service
     ports:
       - "4100:4100"
+    environment:
+      - MONGO_URI=mongodb+srv://jrojasce:jkvUIs1rFxeB4NHR@psn-post-db.izodfgc.mongodb.net/test
+      - PORT=4100
     networks:
       - psn_network
 
-  psn-chat-ms:
-    image: psn-chat-ms
+  psn-chat-ms-service:
+    image: psn-chat-ms-service
     build: ./psn-chat-ms
-    container_name: psn-chat-ms
+    container_name: psn-chat-ms-service
     env_file:
       - ./psn-chat-ms/.env
     ports:
@@ -122,50 +142,50 @@ services:
     networks:
       - psn_network
 
-  rabbitmq:
+  psn-rabbitmq-service:
     image: rabbitmq:3-management
-    container_name: rabbitmq
-    hostname: rabbitmq
+    container_name: psn-rabbitmq-service
+    hostname: psn-rabbitmq-service
     volumes:
       - /var/lib/rabbitmq
     ports:
-      - "4402:5672"
-      - "4403:15672"
+      - "5672:5672"
+      - "15672:15672"
     env_file:
       - ./psn-notification-ms/.env
     networks:
       - psn_network
 
-  psn-notification-ms:
-    image: psn-notification-ms
+  psn-notification-ms-service:
+    image: psn-notification-ms-service
     build: ./psn-notification-ms
-    container_name: psn-notification-ms
+    container_name: psn-notification-ms-service
     env_file:
       - ./psn-notification-ms/.env
     ports:
       - "4400:4400"
     depends_on: 
-      - rabbitmq
+      - psn-rabbitmq-service
     networks:
       - psn_network
     
-  psn-notification-ws-ms:
-    image: psn-notification-ws-ms
+  psn-notification-ws-ms-service:
+    image: psn-notification-ws-ms-service
     build: ./psn-notification-ws-ms
-    container_name: psn-notification-ws-ms
+    container_name: psn-notification-ws-ms-service
     env_file:
       - ./psn-notification-ws-ms/.env
     ports:
       - "4401:4401"
     depends_on: 
-      - rabbitmq
+      - psn-rabbitmq-service
     networks:
       - psn_network
 
-  psn-ag:
-    image: psn-ag
+  psn-ag-service:
+    image: psn-ag-service
     build: ./psn_ag
-    container_name: psn-ag
+    container_name: psn-ag-service
     expose:
       - "4500"
     ports:
