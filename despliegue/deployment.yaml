@@ -83,13 +83,13 @@ spec:
               value: psn-openldap-service
             - name: PHPLDAPADMIN_HTTPS
               value: "false"
-          readinessProbe: # Determina cuando el contenedor está listo para aceptar trafico de red
+          readinessProbe: 
             httpGet:
               path: /
               port: 80
             initialDelaySeconds: 5
             periodSeconds: 10
-          livenessProbe: # Determina si el contenedor está funcionando correctamente o no
+          livenessProbe: 
             httpGet:
               path: /
               port: 80
