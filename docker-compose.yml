@@ -139,10 +139,10 @@ services:
 
   psn-chat-ms-service:
     image: psn-chat-ms-service
-    build: ./psn-chat-ms
+    build: ./psn_chat_ms
     container_name: psn-chat-ms-service
     env_file:
-      - ./psn-chat-ms/.env
+      - ./psn_chat_ms/.env
     ports:
       - "4300:4300"
     networks:
@@ -158,16 +158,16 @@ services:
       - "5672:5672"
       - "15672:15672"
     env_file:
-      - ./psn-notification-ms/.env
+      - ./psn_notification_ms/.env
     networks:
       - psn_network
 
   psn-notification-ms-service:
     image: psn-notification-ms-service
-    build: ./psn-notification-ms
+    build: ./psn_notification_ms
     container_name: psn-notification-ms-service
     env_file:
-      - ./psn-notification-ms/.env
+      - ./psn_notification_ms/.env
     ports:
       - "4400:4400"
     depends_on: 
@@ -177,10 +177,10 @@ services:
     
   psn-notification-ws-ms-service:
     image: psn-notification-ws-ms-service
-    build: ./psn-notification-ws-ms
+    build: ./psn_notification_ws_ms
     container_name: psn-notification-ws-ms-service
     env_file:
-      - ./psn-notification-ws-ms/.env
+      - ./psn_notification_ws_ms/.env
     ports:
       - "4401:4401"
     depends_on: 
