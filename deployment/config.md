@@ -22,6 +22,7 @@ kubectl apply -f service.yaml
 # Run to enter some pod and review it:
 
 ```
+kubectl get pods
 kubectl exec -it <nombre-del-pod> -- /bin/bash
 apt-get update
 apt-get install net-tools
