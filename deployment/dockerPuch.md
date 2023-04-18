@@ -25,19 +25,19 @@ docker push julian9999/psn-post-ms:v1.0
 ```
 
 ```
-docker build -t psn-notification-ms:v1.0 ./psn-notification-ms
+docker build -t psn-notification-ms:v1.0 ./psn_notification_ms
 docker tag psn-notification-ms:v1.0 julian9999/psn-notification-ms:v1.0
 docker push julian9999/psn-notification-ms:v1.0
 ```
 
 ```
-docker build -t psn-notification-ws-ms:v1.0 ./psn-notification-ws-ms
+docker build -t psn-notification-ws-ms:v1.0 ./psn_notification_ws_ms
 docker tag psn-notification-ws-ms:v1.0 julian9999/psn-notification-ws-ms:v1.0
 docker push julian9999/psn-notification-ws-ms:v1.0
 ```
 
 ```
-docker build -t psn-chat-ms:v1.0 ./psn-chat-ms
+docker build -t psn-chat-ms:v1.0 ./psn_chat_ms
 docker tag psn-chat-ms:v1.0 julian9999/psn-chat-ms:v1.0
 docker push julian9999/psn-chat-ms:v1.0
 ```
