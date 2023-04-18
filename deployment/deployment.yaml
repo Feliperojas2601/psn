@@ -337,9 +337,9 @@ spec:
         - name: MONGO_USER
           value: jrojasce
         - name: MONGO_PASSWORD
-          value: FlkJ4IdOQrf6j5Cv
+          value: qcbWwimNLSrxjLr2
         - name: MONGO_HOST
-          value: psn-notification-db.7aux5vf.mongodb.net
+          value: psn-chat-db.mpqzdgz.mongodb.net
         - name: PORT
           value: "4300"
 
@@ -383,7 +383,7 @@ spec:
         - name: RABBITMQ_PASSWORD
           value: admin
         - name: RABBITMQ_HOST
-          value: psn-rabbitmq
+          value: psn-rabbitmq-service
         - name: RABBITMQ_QUEUE_NAME
           value: notification
         volumeMounts:
@@ -433,7 +433,7 @@ spec:
         - name: RABBITMQ_PASSWORD
           value: admin
         - name: RABBITMQ_HOST
-          value: psn-rabbitmq
+          value: psn-rabbitmq-service
         - name: RABBITMQ_QUEUE_NAME
           value: notification
 
@@ -470,7 +470,7 @@ spec:
         - name: RABBITMQ_PASSWORD
           value: admin
         - name: RABBITMQ_HOST
-          value: psn-rabbitmq
+          value: psn-rabbitmq-service
         - name: RABBITMQ_QUEUE_NAME
           value: notification
 
