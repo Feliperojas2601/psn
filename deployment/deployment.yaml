@@ -203,6 +203,8 @@ spec:
           value: "123"
         - name: DB_NAME
           value: psn-authentication-db
+        - name: PSN_WA
+          value: localhost
 
         - name: LDAP_HOST
           value: psn-openldap-service
