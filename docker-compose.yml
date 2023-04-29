@@ -80,6 +80,7 @@ services:
       - DB_USER=psn_admin
       - DB_PASSWORD=123
       - DB_NAME=psn-authentication-db
+      - PSN_WA=localhost
 
       - LDAP_HOST=psn-openldap-service
       - LDAP_PORT=389
