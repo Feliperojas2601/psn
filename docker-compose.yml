@@ -197,6 +197,9 @@ services:
       - "4500"
     ports:
       - "4500:4500"
+    environment:
+      - SERVICE_ACCOUNT_FILE=/psn_ag/psn.json
+      - BUCKET_NAME=psn_bucket1
     networks:
       - psn_network
 

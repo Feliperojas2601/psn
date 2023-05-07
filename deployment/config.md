@@ -13,6 +13,14 @@ docker login --username=<username>
 # Run to 
 
 ```
+kubectl create secret docker-registry psn-ag-secret \
+  --docker-server=https://index.docker.io/v1/ \
+  --docker-username=julian9999 \
+  --docker-password=psn9REPO9full \
+  --docker-email=julianbustos106@gmail.com
+```
+
+```
 kubectl apply -f persistentVolume.yaml
 kubectl apply -f persistentVolumeClaim.yaml
 kubectl apply -f deployment.yaml

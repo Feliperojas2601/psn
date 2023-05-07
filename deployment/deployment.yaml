@@ -497,5 +497,12 @@ spec:
         image: julian9999/psn-ag:v1.0
         ports:
         - containerPort: 4500
+        env:
+        - name: SERVICE_ACCOUNT_FILE
+          value: /psn_ag/psn.json
+        - name: BUCKET_NAME
+          value: psn_bucket1
+      imagePullSecrets:
+        - name: psn-ag-secret
 
 ---
