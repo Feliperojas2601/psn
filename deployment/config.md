@@ -1,3 +1,7 @@
+# config cors in google storage
+
+gcloud storage buckets update gs://psn_bucket1 --cors-file=cors_file.json
+
 # Run to connect to gcloud cluster
 
 ```
