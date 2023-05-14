@@ -47,3 +47,15 @@ docker build -t psn-ag:v1.0 ./psn_ag
 docker tag psn-ag:v1.0 julian9999/psn-ag:v1.0
 docker push julian9999/psn-ag:v1.0
 ```
+
+```
+docker build -t psn-wa:v1.0 ./psn_wa
+docker tag psn-wa:v1.0 julian9999/psn-wa:v1.0
+docker push julian9999/psn-wa:v1.0
+```
+
+```
+docker build -t psn-proxy:v1.0 ./psn_proxy
+docker tag psn-proxy:v1.0 julian9999/psn-proxy:v1.0
+docker push julian9999/psn-proxy:v1.0
+```

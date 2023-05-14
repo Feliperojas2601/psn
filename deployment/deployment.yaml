@@ -506,3 +506,47 @@ spec:
         - name: psn-ag-secret
 
 ---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psn-wa-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psn-wa
+  template:
+    metadata:
+      labels:
+        app: psn-wa
+    spec:
+      containers:
+        - name: psn-wa
+          image: julian9999/psn-wa:v1.0
+          ports:
+            - containerPort: 4600
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psn-nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psn-nginx
+  template:
+    metadata:
+      labels:
+        app: psn-nginx
+    spec:
+      containers:
+        - name: psn-nginx
+          image: julian9999/psn-proxy:v1.0
+          ports:
+            - containerPort: 80
+          
+---

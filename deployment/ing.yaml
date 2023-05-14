@@ -1,0 +1,75 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psn-wa-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psn-wa
+  template:
+    metadata:
+      labels:
+        app: psn-wa
+    spec:
+      containers:
+        - name: psn-wa
+          image: julian9999/psn-wa:v1.0
+          ports:
+            - containerPort: 4600
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psn-nginx-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: psn-nginx
+  template:
+    metadata:
+      labels:
+        app: psn-nginx
+    spec:
+      containers:
+        - name: psn-nginx
+          image: julian9999/psn-proxy:v1.0
+          ports:
+            - containerPort: 80
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: psn-wa-service
+spec:
+  selector:
+    app: psn-wa
+  ports:
+  - name: http
+    protocol: TCP
+    port: 4600
+    targetPort: 4600
+  type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: psn-nginx-service
+spec:
+  selector:
+    app: psn-nginx
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+
+---
