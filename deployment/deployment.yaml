@@ -532,20 +532,20 @@ spec:
 #apiVersion: apps/v1
 #kind: Deployment
 #metadata:
-#  name: psn-nginx-deployment
+#  name: psn-wa-rp-deployment
 #spec:
 #  replicas: 1
 #  selector:
 #    matchLabels:
-#      app: psn-nginx
+#      app: psn-wa-rp
 #  template:
 #    metadata:
 #      labels:
-#        app: psn-nginx
+#        app: psn-wa-rp
 #    spec:
 #      containers:
-#        - name: psn-nginx
-#          image: julian9999/psn-proxy:v1.0
+#        - name: psn-wa-rp
+#          image: julian9999/psn-wa-rp:v1.0
 #          ports:
 #            - containerPort: 80
           

@@ -55,7 +55,7 @@ docker push julian9999/psn-wa:v1.0
 ```
 
 ```
-docker build -t psn-proxy:v1.0 ./psn_proxy
-docker tag psn-proxy:v1.0 julian9999/psn-proxy:v1.0
-docker push julian9999/psn-proxy:v1.0
+docker build -t psn-wa-rp:v1.0 ./psn_wa_rp
+docker tag psn-wa-rp:v1.0 julian9999/psn-wa-rp:v1.0
+docker push julian9999/psn-wa-rp:v1.0
 ```
