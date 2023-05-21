@@ -235,6 +235,22 @@ spec:
 
 ---
 
+apiVersion: v1
+kind: Service
+metadata:
+  name: psn-ag-rp-service
+spec:
+  selector:
+    app: psn-ag-rp
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  type: LoadBalancer
+
+---
+
 #apiVersion: v1
 #kind: Service
 #metadata:
