@@ -190,6 +190,26 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  name: psn-rabbitmq-admin-service
+spec:
+  selector:
+    app: psn-rabbitmq
+  ports:
+  - name: http
+    protocol: TCP
+    port: 4402
+    targetPort: 5672
+  - name: https
+    protocol: TCP
+    port: 4403
+    targetPort: 15672
+  type: LoadBalancer
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
   name: psn-notification-ms-service
 spec:
   selector:

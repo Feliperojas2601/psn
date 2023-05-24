@@ -204,7 +204,7 @@ spec:
         - name: DB_NAME
           value: psn-authentication-db
         - name: PSN_WA
-          value: psn-wa-service
+          value: localhost:4600
 
         - name: LDAP_HOST
           value: psn-openldap-service
