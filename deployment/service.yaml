@@ -251,7 +251,7 @@ spec:
     protocol: TCP
     port: 4500
     targetPort: 4500
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 
@@ -271,34 +271,38 @@ spec:
 
 ---
 
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: psn-wa-service
-#spec:
-#  selector:
-#    app: psn-wa
-#  ports:
-#  - name: http
-#    protocol: TCP
-#    port: 4600
-#    targetPort: 4600
-#  type: ClusterIP
-#
-#---
-#
-#apiVersion: v1
-#kind: Service
-#metadata:
-#  name: psn-wa-rp-service
-#spec:
-#  selector:
-#    app: psn-wa-rp
-#  ports:
-#  - name: http
-#    protocol: TCP
-#    port: 80
-#    targetPort: 80
-#  type: LoadBalancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: psn-wa-service
+spec:
+  selector:
+    app: psn-wa
+  ports:
+  - name: http
+    protocol: TCP
+    port: 4600
+    targetPort: 4600
+  type: ClusterIP
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: psn-wa-rp-service
+spec:
+  selector:
+    app: psn-wa-rp
+  ports:
+  - name: http
+    protocol: TCP
+    port: 80
+    targetPort: 80
+  - name: https
+    protocol: TCP
+    port: 443
+    targetPort: 443
+  type: LoadBalancer
 
 ---
