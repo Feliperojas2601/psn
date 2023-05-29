@@ -163,7 +163,7 @@ spec:
     protocol: TCP
     port: 4300
     targetPort: 4300
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 
@@ -235,7 +235,7 @@ spec:
     protocol: TCP
     port: 4401
     targetPort: 4401
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 
@@ -304,6 +304,5 @@ spec:
     port: 443
     targetPort: 443
   type: LoadBalancer
-  loadBalancerIP: 34.160.250.172
 
 ---
