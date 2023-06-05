@@ -63,19 +63,19 @@ spec:
 
 ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: psn-authentication-ms-service
-spec:
-  selector:
-    app: psn-authentication-ms
-  ports:
-  - name: http
-    protocol: TCP
-    port: 4000
-    targetPort: 4000
-  type: ClusterIP
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: psn-authentication-ms-service
+#spec:
+#  selector:
+#    app: psn-authentication-ms
+#  ports:
+#  - name: http
+#    protocol: TCP
+#    port: 4000
+#    targetPort: 4000
+#  type: ClusterIP
 
 ---
 
@@ -307,34 +307,34 @@ spec:
 
 ---
 
-apiVersion: v1
-kind: Service
-metadata:
-  name: psn-interface-service
-spec:
-  selector:
-    app: psn-interface
-  ports:
-  - name: http
-    protocol: TCP
-    port: 4700
-    targetPort: 4700
-  type: ClusterIP
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: psn-interface-rp-service
-spec:
-  selector:
-    app: psn-interface-rp
-  ports:
-  - name: http
-    protocol: TCP
-    port: 80
-    targetPort: 80
-  type: LoadBalancer
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: psn-interface-service
+#spec:
+#  selector:
+#    app: psn-interface
+#  ports:
+#  - name: http
+#    protocol: TCP
+#    port: 4700
+#    targetPort: 4700
+#  type: LoadBalancer
+#
+#---
+#
+#apiVersion: v1
+#kind: Service
+#metadata:
+#  name: psn-interface-rp-service
+#spec:
+#  selector:
+#    app: psn-interface-rp
+#  ports:
+#  - name: http
+#    protocol: TCP
+#    port: 80
+#    targetPort: 80
+#  type: LoadBalancer
 
 ---
