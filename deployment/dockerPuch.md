@@ -55,18 +55,6 @@ docker push julian9999/psn-ag-rp:v1.0
 ```
 
 ```
-docker build -t psn-wa:v1.0 ./psn_wa
-docker tag psn-wa:v1.0 julian9999/psn-wa:v1.0
-docker push julian9999/psn-wa:v1.0
-```
-
-```
-docker build -t psn-wa-rp:v1.0 ./psn_wa_rp
-docker tag psn-wa-rp:v1.0 julian9999/psn-wa-rp:v1.0
-docker push julian9999/psn-wa-rp:v1.0
-```
-
-```
 docker build -t psn-interface:v1.0 ./psn_interface
 docker tag psn-interface:v1.0 julian9999/psn-interface:v1.0
 docker push julian9999/psn-interface:v1.0
@@ -76,4 +64,16 @@ docker push julian9999/psn-interface:v1.0
 docker build -t psn-interface-rp:v1.0 ./psn_interface_rp
 docker tag psn-interface-rp:v1.0 julian9999/psn-interface-rp:v1.0
 docker push julian9999/psn-interface-rp:v1.0
+```
+
+```
+docker build -t psn-wa:v1.0 ./psn_wa
+docker tag psn-wa:v1.0 julian9999/psn-wa:v1.0
+docker push julian9999/psn-wa:v1.0
+```
+
+```
+docker build -t psn-wa-rp:v1.0 ./psn_wa_rp
+docker tag psn-wa-rp:v1.0 julian9999/psn-wa-rp:v1.0
+docker push julian9999/psn-wa-rp:v1.0
 ```

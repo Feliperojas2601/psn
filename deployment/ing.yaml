@@ -29,7 +29,7 @@ spec:
         - name: DB_NAME
           value: psn-authentication-db
         - name: PSN_WA
-          value: https://34.73.14.6
+          value: https://34.73.199.166
 
         - name: LDAP_HOST
           value: psn-openldap-service
@@ -41,50 +41,6 @@ spec:
           value: cn=admin,dc=pawsomenetwork,dc=com
         - name: LDAP_PASSWORD
           value: admin_pass
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-interface-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-interface
-  template:
-    metadata:
-      labels:
-        app: psn-interface
-    spec:
-      containers:
-        - name: psn-interface
-          image: julian9999/psn-interface:v1.0
-          ports:
-            - containerPort: 4700
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-interface-rp-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-interface-rp
-  template:
-    metadata:
-      labels:
-        app: psn-interface-rp
-    spec:
-      containers:
-        - name: psn-interface-rp
-          image: julian9999/psn-interface-rp:v1.0
-          ports:
-            - containerPort: 80
 
 ---
 
@@ -103,33 +59,3 @@ spec:
   type: ClusterIP
 
 ---
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: psn-interface-service
-spec:
-  selector:
-    app: psn-interface
-  ports:
-  - name: http
-    protocol: TCP
-    port: 4700
-    targetPort: 4700
-  type: LoadBalancer
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
-  name: psn-interface-rp-service
-spec:
-  selector:
-    app: psn-interface-rp
-  ports:
-  - name: http
-    protocol: TCP
-    port: 80
-    targetPort: 80
-  type: LoadBalancer
