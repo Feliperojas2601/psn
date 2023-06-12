@@ -66,26 +66,6 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: psn-ur-db-service
-spec:
-  selector:
-    app: psn-ur-db
-  ports:
-  - name: http
-    protocol: TCP
-    port: 7474
-    targetPort: 7474
-  - name: https
-    protocol: TCP
-    port: 7687
-    targetPort: 7687
-  type: ClusterIP
-
----
-
-apiVersion: v1
-kind: Service
-metadata:
   name: psn-ur-db-admin-service
 spec:
   selector:
