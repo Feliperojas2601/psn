@@ -8,12 +8,6 @@ gcloud storage buckets update gs://psn_bucket1 --cors-file=cors_file.json
 gcloud container clusters get-credentials psn-cluster1 --zone us-east1-b
 ```
 
-# Run to access your docker hub account
-
-```
-docker login --username=<username>
-```
-
 # Run to 
 
 ```

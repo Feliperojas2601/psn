@@ -18,6 +18,22 @@ spec:
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  name: psn-neo4j-persistent-volume
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: /var/lib/neo4j
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
   name: psn-rabbitmq-persistent-volume
 spec:
   storageClassName: standard

@@ -57,90 +57,12 @@ spec:
 
 ---
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-phpldapadmin-deployment
-spec:
-  selector:
-    matchLabels:
-      app: psn-phpldapadmin
-  replicas: 1
-  template:
-    metadata:
-      labels:
-        app: psn-phpldapadmin
-    spec:
-      containers:
-        - name: psn-phpldapadmin
-          image: osixia/phpldapadmin:latest
-          ports:
-            - containerPort: 80
-          env:
-            - name: LDAP_HOSTS
-              value: psn-openldap-service
-            - name: PHPLDAPADMIN_LDAP_HOSTS
-              value: psn-openldap-service
-            - name: PHPLDAPADMIN_HTTPS
-              value: "false"
-          readinessProbe: 
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 5
-            periodSeconds: 10
-          livenessProbe: 
-            httpGet:
-              path: /
-              port: 80
-            initialDelaySeconds: 30
-            periodSeconds: 60
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-phpmyadmin-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-phpmyadmin
-  template:
-    metadata:
-      labels:
-        app: psn-phpmyadmin
-    spec:
-      containers:
-      - name: psn-phpmyadmin
-        image: phpmyadmin/phpmyadmin:latest
-        ports:
-        - containerPort: 80
-        env:
-        - name: PMA_HOST
-          value: "10.0.2.7"
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 30
-          periodSeconds: 60
-
----
-
 #apiVersion: apps/v1
 #kind: Deployment
 #metadata:
 #  name: psn-authentication-ms-deployment
 #spec:
-#  replicas: 1
+#  replicas: 3
 #  selector:
 #    matchLabels:
 #      app: psn-authentication-ms
@@ -156,7 +78,7 @@ spec:
 #        - containerPort: 4000
 #        env:
 #        - name: DB_HOST
-#          value: "10.0.2.7"
+#          value: psn-authentication-db-service.loadbalancer.dns
 #        - name: DB_PORT
 #          value: "3306"
 #        - name: DB_USER
@@ -184,9 +106,50 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: psn-ur-ms-deployment
+  name: psn-ur-db-deployment
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: psn-ur-db
+  template:
+    metadata:
+      labels:
+        app: psn-ur-db
+    spec:
+      containers:
+      - name: psn-ur-db
+        image: neo4j
+        ports:
+        - containerPort: 7474
+        - containerPort: 7687
+        env:
+        - name: NEO4J_AUTH
+          value: neo4j/psn12345
+        - name: NEO4J_dbms_connector_bolt_listen__address
+          value: 0.0.0.0:7687
+        volumeMounts:
+        - name: psn-neo4j-volume
+          mountPath: /data
+        - name: psn-neo4j-volume
+          mountPath: /conf
+        - name: psn-neo4j-volume
+          mountPath: /logs
+        - name: psn-neo4j-volume
+          mountPath: /plugins
+      volumes:
+      - name: psn-neo4j-volume
+        persistentVolumeClaim:
+            claimName: psn-neo4j-claim
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: psn-ur-ms-deployment
+spec:
+  replicas: 3
   selector:
     matchLabels:
       app: psn-ur-ms
@@ -202,11 +165,11 @@ spec:
         - containerPort: 4200
         env:
         - name: NEO4J_URI 
-          value: bolt://10.0.1.7:7687
+          value: bolt://psn-ur-db-service:7687
         - name: NEO4J_USERNAME
           value: neo4j
         - name: NEO4J_PASSWORD
-          value: psn123
+          value: psn12345
 
 ---
 
@@ -215,7 +178,7 @@ kind: Deployment
 metadata:
   name: psn-post-ms-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-post-ms
@@ -242,7 +205,7 @@ kind: Deployment
 metadata:
   name: psn-chat-ms-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-chat-ms
@@ -324,7 +287,7 @@ kind: Deployment
 metadata:
   name: psn-notification-ms-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-notification-ms
@@ -367,7 +330,7 @@ kind: Deployment
 metadata:
   name: psn-notification-ws-ms-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-notification-ws-ms
@@ -404,7 +367,7 @@ kind: Deployment
 metadata:
   name: psn-ag-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-ag
@@ -431,31 +394,9 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: psn-ag-rp-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-ag-rp
-  template:
-    metadata:
-      labels:
-        app: psn-ag-rp
-    spec:
-      containers:
-        - name: psn-ag-rp
-          image: julian9999/psn-ag-rp:v1.0
-          ports:
-            - containerPort: 80
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
   name: psn-interface-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-interface
@@ -469,28 +410,6 @@ spec:
           image: julian9999/psn-interface:v1.0
           ports:
             - containerPort: 4700
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-interface-rp-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-interface-rp
-  template:
-    metadata:
-      labels:
-        app: psn-interface-rp
-    spec:
-      containers:
-        - name: psn-interface-rp
-          image: julian9999/psn-interface-rp:v1.0
-          ports:
-            - containerPort: 80
             
 ---
 
@@ -499,7 +418,7 @@ kind: Deployment
 metadata:
   name: psn-wa-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-wa
@@ -513,28 +432,5 @@ spec:
           image: julian9999/psn-wa:v1.0
           ports:
             - containerPort: 4600
-
----
-
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-wa-rp-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-wa-rp
-  template:
-    metadata:
-      labels:
-        app: psn-wa-rp
-    spec:
-      containers:
-        - name: psn-wa-rp
-          image: julian9999/psn-wa-rp:v1.0
-          ports:
-            - containerPort: 80
-            - containerPort: 443
         
 ---
