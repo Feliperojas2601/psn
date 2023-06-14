@@ -81,7 +81,7 @@ kind: Deployment
 metadata:
   name: psn-ag-rp-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-ag-rp
@@ -103,7 +103,7 @@ kind: Deployment
 metadata:
   name: psn-interface-rp-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-interface-rp
@@ -125,7 +125,7 @@ kind: Deployment
 metadata:
   name: psn-wa-rp-deployment
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: psn-wa-rp
