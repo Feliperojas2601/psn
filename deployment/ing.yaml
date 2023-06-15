@@ -29,7 +29,7 @@ spec:
         - name: DB_NAME
           value: psn-authentication-db
         - name: PSN_WA
-          value: https://34.73.199.166
+          value: https://34.148.173.24
 
         - name: LDAP_HOST
           value: psn-openldap-service

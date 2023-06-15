@@ -595,25 +595,25 @@ spec:
 
 ---
 
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-wa-rp-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-wa-rp
-  template:
-    metadata:
-      labels:
-        app: psn-wa-rp
-    spec:
-      containers:
-        - name: psn-wa-rp
-          image: julian9999/psn-wa-rp:v1.0
-          ports:
-            - containerPort: 80
-            - containerPort: 443
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: psn-wa-rp-deployment
+#spec:
+#  replicas: 1
+#  selector:
+#    matchLabels:
+#      app: psn-wa-rp
+#  template:
+#    metadata:
+#      labels:
+#        app: psn-wa-rp
+#    spec:
+#      containers:
+#        - name: psn-wa-rp
+#          image: julian9999/psn-wa-rp:v1.0
+#          ports:
+#            - containerPort: 80
+#            - containerPort: 443
         
 ---
