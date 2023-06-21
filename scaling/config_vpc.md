@@ -45,7 +45,7 @@ gcloud beta container clusters create psn-cluster1 \
 gcloud container clusters update psn-cluster1 \
     --enable-master-authorized-networks \
     --zone us-east1-b \
-    --master-authorized-networks 10.11.0.0/16,190.27.121.80/32,181.57.191.72/32,10.3.0.0/16,10.4.0.0/16,192.168.0.0/16,10.1.0.0/16
+    --master-authorized-networks 10.11.0.0/16,190.27.121.80/32,186.29.249.39/32,10.3.0.0/16,10.4.0.0/16,192.168.0.0/16,10.1.0.0/16
 ```
 
 ```

@@ -1,68 +1,9 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: psn-openldap-deployment
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: psn-openldap
-  template:
-    metadata:
-      labels:
-        app: psn-openldap
-    spec:
-      containers:
-      - name: psn-openldap
-        image: osixia/openldap:latest
-        env:
-        - name: LDAP_ORGANISATION
-          value: pawsomenetwork
-        - name: LDAP_DOMAIN
-          value: pawsomenetwork.com
-        - name: LDAP_ADMIN_USERNAME
-          value: admin
-        - name: LDAP_ADMIN_PASSWORD
-          value: admin_pass
-        - name: LDAP_CONFIG_PASSWORD
-          value: config_pass
-        - name: LDAP_BASE_DN
-          value: dc=pawsomenetwork,dc=com
-        - name: LDAP_TLS_CRT_FILENAME
-          value: server.crt
-        - name: LDAP_TLS_KEY_FILENAME
-          value: server.key
-        - name: LDAP_TLS_CA_CRT_FILENAME
-          value: pawsomenetwork.com.ca.crt
-        - name: LDAP_READONLY_USER
-          value: "true"
-        - name: LDAP_READONLY_USER_USERNAME
-          value: user-ro
-        - name: LDAP_READONLY_USER_PASSWORD
-          value: ro_pass
-        ports:
-        - containerPort: 389
-        - containerPort: 636
-        volumeMounts:
-        - name: psn-openldap-volume
-          mountPath: /container/service/slapd/assets/certs/
-        - name: psn-openldap-volume
-          mountPath: /var/lib/ldap
-        - name: psn-openldap-volume
-          mountPath: /etc/ldap/slapd.d
-      volumes:
-      - name: psn-openldap-volume
-        persistentVolumeClaim:
-            claimName: psn-openldap-claim
-
----
-
 #apiVersion: apps/v1
 #kind: Deployment
 #metadata:
 #  name: psn-authentication-ms-deployment
 #spec:
-#  replicas: 3
+#  replicas: 1 #3
 #  selector:
 #    matchLabels:
 #      app: psn-authentication-ms
@@ -88,7 +29,7 @@ spec:
 #        - name: DB_NAME
 #          value: psn-authentication-db
 #        - name: PSN_WA
-#          value: https://34.73.14.6
+#          value: https://34.75.238.1
 #
 #        - name: LDAP_HOST
 #          value: psn-openldap-service
@@ -108,7 +49,7 @@ kind: Deployment
 metadata:
   name: psn-ur-ms-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-ur-ms
@@ -128,7 +69,7 @@ spec:
         - name: NEO4J_USERNAME
           value: neo4j
         - name: NEO4J_PASSWORD
-          value: T2Mn7tHt
+          value: uoLn1eNt
 
 ---
 
@@ -137,7 +78,7 @@ kind: Deployment
 metadata:
   name: psn-post-ms-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-post-ms
@@ -164,7 +105,7 @@ kind: Deployment
 metadata:
   name: psn-chat-ms-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-chat-ms
@@ -246,7 +187,7 @@ kind: Deployment
 metadata:
   name: psn-notification-ms-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-notification-ms
@@ -289,7 +230,7 @@ kind: Deployment
 metadata:
   name: psn-notification-ws-ms-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-notification-ws-ms
@@ -326,7 +267,7 @@ kind: Deployment
 metadata:
   name: psn-ag-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-ag
@@ -355,7 +296,7 @@ kind: Deployment
 metadata:
   name: psn-interface-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-interface
@@ -377,7 +318,7 @@ kind: Deployment
 metadata:
   name: psn-wa-deployment
 spec:
-  replicas: 3
+  replicas: 1 #3
   selector:
     matchLabels:
       app: psn-wa
